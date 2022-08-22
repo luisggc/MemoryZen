@@ -7,7 +7,7 @@ export default function Header() {
   const itemsMenu = [
     {
       name: "HOME",
-      router: "#home",
+      router: "#front",
     },
     {
       name: "ABOUT US",
@@ -23,14 +23,14 @@ export default function Header() {
     },
   ];
   return (
-    <div className="w-full h-10 bg-transparent px-10 py-10 flex items-center justify-between fixed">
+    <div className="w-full h-10 bg-transparent px-10 py-10 flex items-center justify-between">
       <div className="flex space-x-4 items-center">
         <Image height={30} width={30} src="/images/logo.png" alt="logo" />
-        <p className="text-lg font-medium">Toutem</p>
+        <p className="text-lg font-medium">MemoryZen</p>
       </div>
       <div className="hidden md:inline-flex items-center">
-        {itemsMenu.map((item, index) => (
-          <div className="items-center cursor-pointer p-3">
+        {itemsMenu.map((item) => (
+          <div className="items-center cursor-pointer p-3" key={item.name}>
             <p className="text-md font-medium">{item.name}</p>
           </div>
         ))}
@@ -51,9 +51,10 @@ export default function Header() {
           </div>
         </div>
         {toggleMenu && (
-          <div className="flex w-30 bg-transparent items-center flex-col shadow-sm absolute -bottom-30 right-0  ">
-            {itemsMenu.map((item, index) => (
+          <div className="flex w-30 bg-white items-center flex-col shadow-sm absolute -bottom-30 right-0  ">
+            {itemsMenu.map((item) => (
               <div
+                key={item.name}
                 className="p-5 items-center w-full cursor-pointer border-b whitespace-nowrap hover:bg-green-300 group"
                 onClick={() => setToggleMenu((v) => !v)}
               >
