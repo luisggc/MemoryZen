@@ -3,7 +3,7 @@ import { MenuIcon, ShoppingBagIcon, SearchIcon } from "@heroicons/react/outline"
 import { useState } from "react";
 
 export default function Header() {
-  const [toggleMenu, setToggleMenu] = useState(true);
+  const [toggleMenu, setToggleMenu] = useState(false);
   const itemsMenu = [
     {
       name: "HOME",

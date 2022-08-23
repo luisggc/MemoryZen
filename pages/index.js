@@ -2,6 +2,7 @@ import Head from "next/head";
 import Header from "../components/Header";
 import Front from "../components/Front";
 import ProductCategories from "../components/ProductCategories";
+import ShopSection from "../components/ShopSection";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <Header />
         <Front />
         <ProductCategories />
+        <ShopSection />
       </main>
     </div>
   );
