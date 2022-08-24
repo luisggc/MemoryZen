@@ -13,22 +13,22 @@ export default function ProductCategories() {
 }
 
 function ProductCategory({ name, src, secondary = false }) {
-  const backColor = secondary ? "bg-green-400" : "bg-gray-50";
-  const textColor = secondary ? "text-white" : "text-green-400";
-
-  const backColorHover = secondary ? "bg-gray-50" : "bg-green-400";
-  const textColorHover = secondary ? "text-green-400" : "text-white";
+  const isSecondary = secondary === true ? 1 : 0;
+  const backColor = isSecondary ? "bg-green-400" : "bg-gray-50";
+  const textColor = isSecondary ? "text-white" : "text-green-400";
+  const backColorHover = isSecondary ? "bg-gray-50" : "bg-green-400";
+  const textColorHover = isSecondary ? "text-green-400" : "text-white";
 
   return (
     <div
-      className={` ${backColor} group hover:${backColorHover} items-center justify-center p-12 border border-transparent rounded-tr-3xl rounded-bl-3xl drop-shadow-lg mt-6  }`}
+      className={`${backColor}  hover:${backColorHover} group items-center justify-center p-12  rounded-tr-3xl rounded-bl-3xl drop-shadow-lg mt-6  }`}
     >
       <div className="w-full flex justify-center mb-4">
         <Image src={src} alt={name} height={80} width={80} />
       </div>
       <div className="w-32 flex items-center justify-center">
         <p
-          className={`${textColor} text-xl font-semibold text-center whitespace-nowrap group-hover:${textColorHover}`}
+          className={`${textColor} text-xl font-semibold text-center whitespace-nowrap  group-hover:${textColorHover}`}
         >
           {name}
         </p>
