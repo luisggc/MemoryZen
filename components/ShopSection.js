@@ -14,6 +14,18 @@ export default function ShopSection() {
         price: "$50",
         image: "/images/product-02.png",
       },
+      {
+        name: "Basket INNER BEAUTY",
+        description: "Original product comes in three styles of color, usb charger.",
+        price: "$70",
+        image: "/images/product-03.png",
+      },
+      {
+        name: "Uplift Handcrafted Soap Bar",
+        description: "Original product comes in three styles of color, usb charger.",
+        price: "$10",
+        image: "/images/product-04.png",
+      },
   ];
   return (
     <div className="flex flex-col items-center justify-center mt-16 w-full">

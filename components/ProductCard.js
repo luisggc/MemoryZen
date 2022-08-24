@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export default function ProductCard({ name, description, price, image }) {
   return (
-    <div className="w-96 bg-transparent relative shadow-sm rounded-bl-3xl rounded-tr-3xl">
+    <div className="w-96 bg-transparent relative shadow-sm rounded-bl-3xl rounded-tr-3xl cursor-pointer">
       <Image
-        className="object-cover rounded-bl-3xl rounded-tr-3xl w-full h-full"
+        className="object-cover rounded-bl-3xl rounded-tr-3xl  w-full h-full transition duration-300 transform ease-in hover:opacity-70"
         src={image}
         height={500}
         width={500}
