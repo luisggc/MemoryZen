@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Front from "../components/Front";
 import ProductCategories from "../components/ProductCategories";
 import ShopSection from "../components/ShopSection";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <ProductCategories />
         <ShopSection />
       </main>
+      <Footer />
     </div>
   );
 }

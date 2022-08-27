@@ -1,31 +1,36 @@
+import Link from "next/link";
 import ProductCard from "./ProductCard";
 
 export default function ShopSection() {
   const products = [
     {
-        name: "Aroma Diffuser",
-        description: "Original product comes in three styles of color, usb charger.",
-        price: "$10",
-        image: "/images/product-01.png",
-      },
-      {
-        name: "Lux Aroma Diffuser",
-        description: "Original product comes in three styles of color, usb charger.",
-        price: "$50",
-        image: "/images/product-02.png",
-      },
-      {
-        name: "Basket INNER BEAUTY",
-        description: "Original product comes in three styles of color, usb charger.",
-        price: "$70",
-        image: "/images/product-03.png",
-      },
-      {
-        name: "Uplift Handcrafted Soap Bar",
-        description: "Original product comes in three styles of color, usb charger.",
-        price: "$10",
-        image: "/images/product-04.png",
-      },
+      id: 1,
+      name: "Aroma Diffuser",
+      description: "Original product comes in three styles of color, usb charger.",
+      price: "$10",
+      image: "/images/product-01.png",
+    },
+    {
+      id: 2,
+      name: "Lux Aroma Diffuser",
+      description: "Original product comes in three styles of color, usb charger.",
+      price: "$50",
+      image: "/images/product-02.png",
+    },
+    {
+      id: 3,
+      name: "Basket INNER BEAUTY",
+      description: "Original product comes in three styles of color, usb charger.",
+      price: "$70",
+      image: "/images/product-03.png",
+    },
+    {
+      id: 4,
+      name: "Uplift Handcrafted Soap Bar",
+      description: "Original product comes in three styles of color, usb charger.",
+      price: "$10",
+      image: "/images/product-04.png",
+    },
   ];
   return (
     <div className="flex flex-col items-center justify-center mt-16 w-full">
@@ -46,8 +51,12 @@ export default function ShopSection() {
         </div>
       </div>
       <div className="flex mt-6 gap-5 items-center justify-center w-full px-12 flex-wrap">
-        {products.map((product, index) => (
-            <ProductCard key={index} {...product} />
+        {products.map((product) => (
+          <Link key={product.id} href={`/product/${encodeURIComponent(product.id)}`}>
+            <a>
+              <ProductCard {...product} />
+            </a>
+          </Link>
         ))}
       </div>
     </div>
