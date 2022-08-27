@@ -18,8 +18,6 @@ function ProductCategory({ name, src, secondary = false }) {
   const textColor = isSecondary ? "text-white" : "text-green-400";
   const backColorHover = isSecondary ? "bg-gray-50" : "bg-green-400";
   const textColorHover = isSecondary ? "text-green-400" : "text-white";
-
-  console.log(isSecondary, backColorHover, textColorHover)
   return (
     <div
       className={`${backColor}  hover:${backColorHover} group items-center justify-center p-12  rounded-tr-3xl rounded-bl-3xl drop-shadow-lg mt-6`}
