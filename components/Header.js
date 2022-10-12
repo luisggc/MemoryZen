@@ -51,7 +51,7 @@ export default function Header() {
           </div>
         </div>
         {toggleMenu && (
-          <div className="flex w-30 bg-white items-center flex-col shadow-sm absolute -bottom-30 right-0  ">
+          <div className="flex w-30 bg-white items-center flex-col shadow-sm absolute -bottom-30 right-0  z-50">
             {itemsMenu.map((item) => (
               <div
                 key={item.name}
