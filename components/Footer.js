@@ -10,16 +10,16 @@ export default function Footer() {
           <p className="text-lg font-medium">MemoryZen</p>
         </div>
         <div className="flex flex-col md:flex-row md:gap-6 items-center justify-center">
-          <Link href="cart">
+          <Link href="/cart">
             <a className="text-green-400 font-semibold text-center w-full whitespace-nowrap">Cart</a>
           </Link>
-          <Link href="contact-us">
+          <Link href="/contact-us">
             <a className="text-green-400 font-semibold text-center w-full whitespace-nowrap">Contact us</a>
           </Link>
-          <Link href="about-us">
+          <Link href="/about-us">
             <a className="text-green-400 font-semibold text-center w-full whitespace-nowrap">About us</a>
           </Link>
-          <Link href="shop">
+          <Link href="/shop">
             <a className="text-green-400 font-semibold text-center w-full whitespace-nowrap">Shop</a>
           </Link>
         </div>
