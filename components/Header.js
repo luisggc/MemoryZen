@@ -44,19 +44,19 @@ export default function Header() {
         <div className="relative">
           <div className="flex items-center">
             <div
-              className="inline-flex md:hidden items-center cursor-pointer"
-              onClick={() => setToggleMenu((v) => !v)}
-            >
-              <MenuIcon className="w-8 h-8" />
-            </div>
-            <div
-              className="hidden md:inline-flex items-center cursor-pointer py-3 pl-2 pr-1"
+              className="items-center cursor-pointer py-3 pl-2 pr-1  mr-2 md:mr-0"
               onClick={() => setVisibleCart((v) => !v)}
             >
               <ShoppingBagIcon className="w-5 h-5" />
             </div>
             <div className="hidden md:inline-flex items-center cursor-pointer py-3 pl-2 pr-1">
               <SearchIcon className="w-5 h-5" />
+            </div>
+            <div
+              className="inline-flex md:hidden items-center cursor-pointer"
+              onClick={() => setToggleMenu((v) => !v)}
+            >
+              <MenuIcon className="w-8 h-8" />
             </div>
           </div>
           {toggleMenu && <HamburguerMenu toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />}
