@@ -1,40 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import DefaultLayout from "../../components/DefaultLayout";
-
-const products = [
-  {
-    id: 1,
-    name: "Aroma Diffuser",
-    description: "Original product comes in three styles of color, usb charger.",
-    price: "$10",
-    image: "/images/product-01.png",
-  },
-  {
-    id: 2,
-    name: "Lux Aroma Diffuser",
-    description: "Original product comes in three styles of color, usb charger.",
-    price: "$50",
-    image: "/images/product-02.png",
-  },
-  {
-    id: 3,
-    name: "Basket INNER BEAUTY",
-    description: "Original product comes in three styles of color, usb charger.",
-    price: "$70",
-    image: "/images/product-03.png",
-  },
-  {
-    id: 4,
-    name: "Uplift Handcrafted Soap Bar",
-    description: "Original product comes in three styles of color, usb charger.",
-    price: "$10",
-    image: "/images/product-04.png",
-  },
-];
+import { client, urlFor } from "../../lib/client";
 
 const Product = (props) => {
-  const { name, price, id, description, image } = props?.product;
+  const { name, price, description, image } = props?.product;
   return (
     <DefaultLayout>
       <div className="flex flex-col w-full  justify-center items-center">
@@ -49,7 +19,7 @@ const Product = (props) => {
         >
           <Image
             className="rounded-bl-3xl rounded-tr-3xl shadow-lg"
-            src={image}
+            src={urlFor(image[0]).width(240).url()}
             alt="product"
             height={240}
             width={240}
@@ -61,7 +31,7 @@ const Product = (props) => {
               <p className="text-lg font-semibold">{name}</p>
             </div>
             <div className="bg-green-300 rounded-full px-2">
-              <p className="text-white text-md">{price}</p>
+              <p className="text-white text-md">${price}</p>
             </div>
           </div>
           <div className="w-full mt-2">
@@ -80,8 +50,8 @@ const Product = (props) => {
           </div>
         </div>
         <div className="flex justify-left md:justify-center w-full px-10 mt-5 space-x-5 overflow-x-scroll scrollbar-none">
-          {products.map((product) => (
-            <SimilarProduct key={product.id} {...product} />
+          {props?.allProducts?.map((product) => (
+            <SimilarProduct key={product._id} {...product} />
           ))}
         </div>
       </div>
@@ -89,20 +59,20 @@ const Product = (props) => {
   );
 };
 
-const SimilarProduct = ({ name, image, id }) => {
+const SimilarProduct = ({ name, image, slug }) => {
   return (
     <div>
-      <Link href={`/product/${encodeURIComponent(id)}`}>
+      <Link href={`/product/${slug.current}`}>
         <div className="items-center justify-center relative shadow-lg cursor-pointer">
           <Image
             className="rounded-bl-3xl rounded-tr-3xl shadow-lg"
             layout="fixed"
-            src={image}
+            src={urlFor(image[0]).width(200).url()}
             alt="product"
             height={200}
             width={200}
           />
-          <div className="absolute bottom-1 z-10 bg-white w-full bg-opacity-90 pb-4 px-4 pt-2 font-semibold text-sm rounded-tr-2xl shadow-2xl">
+          <div className="absolute bottom-1 z-10 bg-white w-full bg-opacity-90 pb-4 px-4 pt-2 font-semibold text-sm rounded-tr-2xl">
             <p>{name}</p>
           </div>
         </div>
@@ -113,13 +83,19 @@ const SimilarProduct = ({ name, image, id }) => {
 
 export default Product;
 
-export function getServerSideProps(context) {
-  const product = products.filter(
-    (product) => product.id === parseInt(context.query["product-id"])
-  )[0];
+export async function getServerSideProps(context) {
+  const slug = context.params["slug"];
+
+  const queryProduct = `*[_type == "products" && slug.current == '${slug}'][0]`;
+  const product = await client.fetch(queryProduct);
+
+  const queryProducts = '*[_type == "products"]';
+  const allProducts = await client.fetch(queryProducts);
+
   return {
     props: {
       product,
+      allProducts,
     },
   };
 }

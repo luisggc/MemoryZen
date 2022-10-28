@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { urlFor } from "../lib/client";
 
 export default function ProductCard({ name, description, price, image }) {
   return (
     <div className="w-96 bg-transparent relative shadow-sm rounded-bl-3xl rounded-tr-3xl cursor-pointer">
       <Image
         className="object-cover rounded-bl-3xl rounded-tr-3xl  w-full h-full transition duration-300 transform ease-in hover:opacity-70"
-        src={image}
+        src={urlFor(image[0]).width(500).url()}
         height={500}
         width={500}
         layout="responsive"

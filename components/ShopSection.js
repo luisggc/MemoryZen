@@ -1,7 +1,8 @@
 import Link from "next/link";
 import ProductCard from "./ProductCard";
 
-export default function ShopSection() {
+export default function ShopSection({ products }) {
+  /*
   const products = [
     {
       id: 1,
@@ -31,7 +32,8 @@ export default function ShopSection() {
       price: "$10",
       image: "/images/product-04.png",
     },
-  ];
+  ];*/
+
   return (
     <div className="flex flex-col items-center justify-center mt-16 w-full">
       <div
@@ -52,7 +54,7 @@ export default function ShopSection() {
       </div>
       <div className="flex mt-6 gap-5 items-center justify-center w-full px-12 flex-wrap">
         {products.map((product) => (
-          <Link key={product.id} href={`/product/${encodeURIComponent(product.id)}`}>
+          <Link key={product._id} href={`/product/${encodeURIComponent(product.slug.current)}`}>
             <a>
               <ProductCard {...product} />
             </a>
