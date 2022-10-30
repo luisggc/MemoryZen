@@ -38,9 +38,9 @@ const products = [
 ];
 */
 export default function Cart({ visibleCart, setVisibleCart }) {
-
   const [refComponent] = useClickOutside(() => setVisibleCart(false));
-  const { cartItems } = useStateContext()
+  const { cartItems } = useStateContext();
+  const totalValue = cartItems?.reduce((p, v) => p + v.price * v.quantity, 0);
 
   return (
     <div
@@ -55,24 +55,52 @@ export default function Cart({ visibleCart, setVisibleCart }) {
       >
         <XIcon className="w-8 h-8" />
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col h-full justify-between px-10">
         <div className="mt-10 mb-8">
           <p className="text-xl text-green-500 font-semibold text-left">Carrinho</p>
         </div>
+        {cartItems.length === 0 ? (
+          <div className="flex items-center grow">
+            <p>You do not have items in your cart.</p>
+            <p>
+              <a href="/" className="font-semibold text-green-400">
+                Click here
+              </a>{" "}
+              to select the best products.
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="flex flex-col items-center grow">
+              <div className="flex flex-col">
+                {cartItems.map((product) => (
+                  <ProductCart key={product._id} {...product} />
+                ))}
+              </div>
+            </div>
 
-        <div className="flex flex-col px-10">
-          {cartItems.map((product) => (
-            <ProductCart key={product._id} {...product} />
-          ))}
-        </div>
+            <div className="flex flex-col mb-5">
+              <div className="flex justify-between mb-5">
+                <div>
+                  <p className="text-lg">Subtotal:</p>
+                </div>
+                <div>
+                  <p className="text-lg">${totalValue}</p>
+                </div>
+              </div>
+              <button className="bg-green-400 py-3 px-4 text-white rounded-md animate-pulse">
+                PAY NOW
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
 const ProductCart = ({ _id, name, image, price, quantity }) => {
-
-const { addQuantityToCart, removeItemFromCart } = useStateContext()
+  const { addQuantityToCart, removeItemFromCart } = useStateContext();
   const increaseQuantity = () => addQuantityToCart(_id, +1);
   const decreaseQuantity = () => addQuantityToCart(_id, -1);
   const deleteItem = () => removeItemFromCart(_id);
