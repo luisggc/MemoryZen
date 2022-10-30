@@ -1,9 +1,11 @@
 import { XIcon, TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/outline";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useStateContext } from "../context/StateContext";
 import useClickOutside from "../hooks/useClickOutside";
 import { urlFor } from "../lib/client";
 
+/*
 const products = [
   {
     id: 1,
@@ -34,11 +36,12 @@ const products = [
     image: "/images/product-04.png",
   },
 ];
-
+*/
 export default function Cart({ visibleCart, setVisibleCart }) {
 
   const [refComponent] = useClickOutside(() => setVisibleCart(false));
-  
+  const { cartItems } = useStateContext()
+
   return (
     <div
       ref={refComponent}
@@ -58,8 +61,8 @@ export default function Cart({ visibleCart, setVisibleCart }) {
         </div>
 
         <div className="flex flex-col px-10">
-          {products.map((product) => (
-            <ProductCart key={product.id} {...product} />
+          {cartItems.map((product) => (
+            <ProductCart key={product._id} {...product} />
           ))}
         </div>
       </div>
@@ -67,13 +70,12 @@ export default function Cart({ visibleCart, setVisibleCart }) {
   );
 }
 
-const ProductCart = ({ _id, name, description, image, price }) => {
-  const [quantity, setQuantity] = useState(1);
-  const increaseQuantity = () => setQuantity((v) => v + 1);
-  const decreaseQuantity = () => quantity > 1 && setQuantity((v) => v - 1);
-  const deleteItem = (_id) => {
-    console.log("delete ", _id);
-  }
+const ProductCart = ({ _id, name, image, price, quantity }) => {
+
+const { addQuantityToCart, removeItemFromCart } = useStateContext()
+  const increaseQuantity = () => addQuantityToCart(_id, +1);
+  const decreaseQuantity = () => addQuantityToCart(_id, -1);
+  const deleteItem = () => removeItemFromCart(_id);
 
   return (
     <>
@@ -81,7 +83,7 @@ const ProductCart = ({ _id, name, description, image, price }) => {
         <div className="mr-5">
           <Image
             className="rounded-bl-3xl rounded-tr-3xl shadow-lg"
-            src={image}
+            src={urlFor(image[0]).width(100).url()}
             alt="product"
             height={100}
             width={100}
@@ -110,7 +112,7 @@ const ProductCart = ({ _id, name, description, image, price }) => {
                   <PlusIcon className="w-3 h-3" />
                 </button>
               </div>
-              <div className="ml-2 p-1 cursor-pointer" onClick={() => deleteItem(_id)}>
+              <div className="ml-2 p-1 cursor-pointer" onClick={deleteItem}>
                 <TrashIcon className="w-5 h-5 text-gray-500" />
               </div>
             </div>

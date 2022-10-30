@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import DefaultLayout from "../../components/DefaultLayout";
+import { useStateContext } from "../../context/StateContext";
 import { client, urlFor } from "../../lib/client";
 
 const Product = (props) => {
   const { name, price, description, image } = props?.product;
+  const { addItemToCart } = useStateContext();
   return (
     <DefaultLayout>
       <div className="flex flex-col w-full  justify-center items-center">
@@ -37,11 +39,14 @@ const Product = (props) => {
           <div className="w-full mt-2">
             <p className="font-semibold text-sm text-gray-400">{description}</p>
           </div>
-          <div className="flex justify-between w-full mt-8">
+          <div className="flex justify-between w-full mt-8 select-none">
             <div className="w-40 bg-green-400 p-2 rounded-lg cursor-pointer">
               <p className="text-center text-white text-lg font-semibold">BUY NOW</p>
             </div>
-            <div className="w-40 p-2 rounded-lg cursor-pointer border-solid border-2 border-green-400">
+            <div
+              className="w-40 p-2 rounded-lg cursor-pointer border-solid border-2 border-green-400"
+              onClick={() => addItemToCart(props?.product, 1)}
+            >
               <p className="text-center text-green-400 text-lg font-semibold">ADD TO CART</p>
             </div>
           </div>
@@ -83,7 +88,7 @@ const SimilarProduct = ({ name, image, slug }) => {
 
 export default Product;
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const slug = context.params["slug"];
 
   const queryProduct = `*[_type == "products" && slug.current == '${slug}'][0]`;
@@ -99,3 +104,21 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+export const getStaticPaths = async () => {
+  const query = `*[_type == "products"]{
+    slug {
+      current
+    }
+  }`;
+  const products = await client.fetch(query);
+
+  const paths = products.map((product) => ({
+    params: { slug: product.slug.current },
+  }));
+
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};

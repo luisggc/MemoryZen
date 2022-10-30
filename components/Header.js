@@ -3,6 +3,7 @@ import { MenuIcon, ShoppingBagIcon, SearchIcon } from "@heroicons/react/outline"
 import { useState } from "react";
 import Cart from "./Cart";
 import useClickOutside from "../hooks/useClickOutside";
+import { useStateContext } from "../context/StateContext";
 
 const itemsMenu = [
   {
@@ -25,7 +26,7 @@ const itemsMenu = [
 
 export default function Header() {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const [visibleCart, setVisibleCart] = useState(false);
+  const {showCart, setShowCart} = useStateContext()
   
   return (
     <>
@@ -45,7 +46,7 @@ export default function Header() {
           <div className="flex items-center">
             <div
               className="items-center cursor-pointer py-3 pl-2 pr-1  mr-2 md:mr-0"
-              onClick={() => setVisibleCart((v) => !v)}
+              onClick={() => setShowCart((v) => !v)}
             >
               <ShoppingBagIcon className="w-5 h-5" />
             </div>
@@ -63,7 +64,7 @@ export default function Header() {
         </div>
       </div>
       {/* {visibleCart && <Cart visibleCart={visibleCart} setVisibleCart={setVisibleCart} />} */}
-      <Cart visibleCart={visibleCart} setVisibleCart={setVisibleCart} />
+      <Cart visibleCart={showCart} setVisibleCart={setShowCart} />
     </>
   );
 }
