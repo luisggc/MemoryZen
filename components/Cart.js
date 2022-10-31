@@ -1,46 +1,31 @@
 import { XIcon, TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/outline";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { useStateContext } from "../context/StateContext";
 import useClickOutside from "../hooks/useClickOutside";
 import { urlFor } from "../lib/client";
+import getStripe from "../lib/getStripe";
 
-/*
-const products = [
-  {
-    id: 1,
-    name: "Aroma Diffuser",
-    description: "Original product comes in three styles of color, usb charger.",
-    price: 10,
-    image: "/images/product-01.png",
-  },
-  {
-    id: 2,
-    name: "Lux Aroma Diffuser",
-    description: "Original product comes in three styles of color, usb charger.",
-    price: 50,
-    image: "/images/product-02.png",
-  },
-  {
-    id: 3,
-    name: "Basket INNER BEAUTY",
-    description: "Original product comes in three styles of color, usb charger.",
-    price: 70,
-    image: "/images/product-03.png",
-  },
-  {
-    id: 4,
-    name: "Uplift Handcrafted Soap Bar",
-    description: "Original product comes in three styles of color, usb charger.",
-    price: 10,
-    image: "/images/product-04.png",
-  },
-];
-*/
 export default function Cart({ visibleCart, setVisibleCart }) {
   const [refComponent] = useClickOutside(() => setVisibleCart(false));
   const { cartItems } = useStateContext();
   const totalValue = cartItems?.reduce((p, v) => p + v.price * v.quantity, 0);
+
+  const handlePurchase = async () => {
+    const stripe = await getStripe();
+    const response = await fetch("/api/stripe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({cartItems}),
+    });
+
+    if (response.statusCode === 500) return;
+
+    const data = await response.json();
+    toast.loading("Redirecting to payment page...");
+    stripe.redirectToCheckout({ sessionId: data.id });
+  };
 
   return (
     <div
@@ -88,7 +73,10 @@ export default function Cart({ visibleCart, setVisibleCart }) {
                   <p className="text-lg">${totalValue}</p>
                 </div>
               </div>
-              <button className="bg-green-400 py-3 px-4 text-white rounded-md animate-pulse">
+              <button
+                className="bg-green-400 py-3 px-4 text-white rounded-md animate-pulse"
+                onClick={handlePurchase}
+              >
                 PAY NOW
               </button>
             </div>
