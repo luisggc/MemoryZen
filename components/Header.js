@@ -4,30 +4,31 @@ import { useState } from "react";
 import Cart from "./Cart";
 import useClickOutside from "../hooks/useClickOutside";
 import { useStateContext } from "../context/StateContext";
+import Link from "next/link";
 
 const itemsMenu = [
   {
     name: "HOME",
-    router: "#front",
+    router: "/",
   },
   {
     name: "ABOUT US",
-    router: "#about-us",
+    router: "/about-us",
   },
   {
     name: "SHOP",
-    router: "#shop",
+    router: "/shop",
   },
   {
     name: "CONTACT US",
-    router: "#contact-us",
+    router: "/contact-us",
   },
 ];
 
 export default function Header() {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const {showCart, setShowCart} = useStateContext()
-  
+  const { showCart, setShowCart } = useStateContext();
+
   return (
     <>
       <div className="w-full h-10 bg-transparent px-10 py-10 flex items-center justify-between">
@@ -37,9 +38,11 @@ export default function Header() {
         </div>
         <div className="hidden md:inline-flex items-center">
           {itemsMenu.map((item) => (
-            <div className="items-center cursor-pointer p-3" key={item.name}>
-              <p className="text-md font-medium">{item.name}</p>
-            </div>
+            <Link href={item.router}>
+              <div className="items-center cursor-pointer p-3" key={item.name}>
+                <p className="text-md font-medium">{item.name}</p>
+              </div>
+            </Link>
           ))}
         </div>
         <div className="relative">
@@ -63,7 +66,6 @@ export default function Header() {
           {toggleMenu && <HamburguerMenu toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />}
         </div>
       </div>
-      {/* {visibleCart && <Cart visibleCart={visibleCart} setVisibleCart={setVisibleCart} />} */}
       <Cart visibleCart={showCart} setVisibleCart={setShowCart} />
     </>
   );
@@ -73,7 +75,10 @@ const HamburguerMenu = ({ setToggleMenu }) => {
   const [refComponent] = useClickOutside(() => setToggleMenu(false));
 
   return (
-    <div ref={refComponent} className="flex w-30 bg-white items-center flex-col shadow-sm absolute -bottom-30 right-0  z-50">
+    <div
+      ref={refComponent}
+      className="flex w-30 bg-white items-center flex-col shadow-sm absolute -bottom-30 right-0  z-50"
+    >
       {itemsMenu.map((item) => (
         <div
           key={item.name}
