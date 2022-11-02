@@ -32,11 +32,7 @@ export default async function handler(req, res) {
         quantity: item.quantity,
       };
     });
-    console.log(line_items);
-    console.log(line_items[0].price_data.product_data);
-    console.log(line_items[0].price_data.product_data);
-
-    // Create Checkout Sessions from body params.
+    
     const session = await stripe.checkout.sessions.create({
       submit_type: "pay",
       mode: "payment",
@@ -47,7 +43,7 @@ export default async function handler(req, res) {
         { shipping_rate: "shr_1LyzcZCSYepECQMuavTPiGRZ" },
       ],
       line_items,
-      success_url: `${req.headers.origin}/?success=true`,
+      success_url: `${req.headers.origin}/success`,
       cancel_url: `${req.headers.origin}/?canceled=true`,
     });
     res.status(200).json(session);
