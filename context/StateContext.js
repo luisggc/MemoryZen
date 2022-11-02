@@ -3,11 +3,22 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
+  const initialCartItems = [];
   const [showCart, setShowCart] = useState(false);
-  const [cartItems, setCartitems] = useState([]);
+  const [cartItems, setCartitems] = useState(initialCartItems);
+
+  useEffect(() => {
+    const cartItems = localStorage.getItem("cartItems", cartItems);
+    setCartitems(JSON.parse(cartItems));
+  }, []);
+
+  useEffect(() => {
+    if (cartItems == initialCartItems) return;
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
   const addItemToCart = (product, quantity = 1) => {
     const exist = cartItems.find((x) => x._id === product._id);
-    console.log(cartItems);
     if (exist) {
       addQuantityToCart(product._id, quantity);
     } else {
@@ -29,11 +40,6 @@ export const StateContext = ({ children }) => {
     setCartitems((cartItems) => cartItems.filter((x) => x._id !== productId));
   };
 
-  let quantity = 0;
-  useEffect(() => {
-    quantity = cartItems.length;
-  }, [cartItems]);
-
   return (
     <Context.Provider
       value={{
@@ -41,7 +47,6 @@ export const StateContext = ({ children }) => {
         setShowCart,
         cartItems,
         setCartitems,
-        quantity,
         addItemToCart,
         addQuantityToCart,
         removeItemFromCart,
