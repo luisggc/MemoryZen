@@ -3,10 +3,24 @@ import Link from "next/link";
 import DefaultLayout from "../../components/DefaultLayout";
 import { useStateContext } from "../../context/StateContext";
 import { client, urlFor } from "../../lib/client";
+import getStripe from "../../lib/getStripe";
 
 const Product = (props) => {
   const { name, price, description, image } = props?.product;
   const { addItemToCart } = useStateContext();
+  const handleBuyNow = async () => {
+    const stripe = await getStripe();
+    const response = await fetch("/api/stripe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cartItems: [{ ...props.product, quantity: 1 }] }),
+    });
+
+    if (response.statusCode === 500) return;
+
+    const data = await response.json();
+    stripe.redirectToCheckout({ sessionId: data.id });
+  };
   return (
     <DefaultLayout>
       <div className="flex flex-col w-full  justify-center items-center">
@@ -40,7 +54,7 @@ const Product = (props) => {
             <p className="font-semibold text-sm text-gray-400">{description}</p>
           </div>
           <div className="flex justify-between w-full mt-8 select-none">
-            <div className="w-40 bg-green-400 p-2 rounded-lg cursor-pointer">
+            <div className="w-40 bg-green-400 p-2 rounded-lg cursor-pointer" onClick={handleBuyNow}>
               <p className="text-center text-white text-lg font-semibold">BUY NOW</p>
             </div>
             <div
