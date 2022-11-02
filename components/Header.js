@@ -27,7 +27,7 @@ const itemsMenu = [
 
 export default function Header() {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const { showCart, setShowCart } = useStateContext();
+  const { showCart, setShowCart, itemsCartQuantity } = useStateContext();
 
   return (
     <>
@@ -51,7 +51,14 @@ export default function Header() {
               className="items-center cursor-pointer py-3 pl-2 pr-1  mr-2 md:mr-0"
               onClick={() => setShowCart((v) => !v)}
             >
-              <ShoppingBagIcon className="w-5 h-5" />
+              <div className="relative">
+                <ShoppingBagIcon className="w-5 h-5" />
+                {itemsCartQuantity > 0 && (
+                  <div className="absolute -top-2 -right-2 bg-red-500 rounded-full w-4 h-4">
+                    <p className="text-xs text-white text-center">{itemsCartQuantity}</p>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="hidden md:inline-flex items-center cursor-pointer py-3 pl-2 pr-1">
               <SearchIcon className="w-5 h-5" />
