@@ -38,8 +38,8 @@ export default function Header() {
         </div>
         <div className="hidden md:inline-flex items-center">
           {itemsMenu.map((item) => (
-            <Link href={item.router}>
-              <div className="items-center cursor-pointer p-3" key={item.name}>
+            <Link href={item.router} key={item.name}>
+              <div className="items-center cursor-pointer p-3">
                 <p className="text-md font-medium">{item.name}</p>
               </div>
             </Link>
