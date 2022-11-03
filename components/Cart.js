@@ -1,6 +1,5 @@
 import { XIcon, TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/outline";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useStateContext } from "../context/StateContext";
 import useClickOutside from "../hooks/useClickOutside";
