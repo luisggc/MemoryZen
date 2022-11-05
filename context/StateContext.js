@@ -6,7 +6,7 @@ export const StateContext = ({ children }) => {
   const initialCartItems = [];
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartitems] = useState(initialCartItems);
-  const itemsCartQuantity = cartItems.length;
+  const itemsCartQuantity = cartItems ? cartItems.length : 0;
 
   useEffect(() => {
     const cartItems = localStorage.getItem("cartItems", cartItems);

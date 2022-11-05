@@ -37,7 +37,6 @@ function ProductCategory({ name, src, secondary = false }) {
   const backColorHover = isSecondary ? "hover:bg-gray-50" : "hover:bg-green-400";
   const textColorHover = isSecondary ? "group-hover:text-green-400" : "group-hover:text-white";
 
-  console.log(textColorHover, backColorHover)
   return (
     <div
       className={`${backColor} ${backColorHover} group items-center justify-center p-12  rounded-tr-3xl rounded-bl-3xl drop-shadow-lg mt-6`}

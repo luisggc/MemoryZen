@@ -9,7 +9,7 @@ import getStripe from "../lib/getStripe";
 
 export default function Cart({ visibleCart, setVisibleCart }) {
   const [refComponent] = useClickOutside(() => setVisibleCart(false));
-  const { cartItems } = useStateContext();
+  const { cartItems, itemsCartQuantity } = useStateContext();
   const totalValue = cartItems?.reduce((p, v) => p + v.price * v.quantity, 0);
 
   const handlePurchase = async () => {
@@ -44,7 +44,7 @@ export default function Cart({ visibleCart, setVisibleCart }) {
         <div className="mt-10 mb-8">
           <p className="text-xl text-green-500 font-semibold text-left">Cart</p>
         </div>
-        {cartItems.length === 0 ? (
+        {itemsCartQuantity === 0 ? (
           <div className="flex flex-col justify-center items-center grow">
             <p>You do not have items in your cart.</p>
             <p>
