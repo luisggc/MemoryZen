@@ -33,14 +33,22 @@ export default function Header() {
   return (
     <>
       <div className="w-full h-10 bg-transparent px-10 py-10 flex items-center justify-between">
-        <div className="flex space-x-4 items-center">
-          <Image height={30} width={30} src="/images/logo.png" alt="logo" />
-          <p className="text-lg font-medium">MemoryZen</p>
-        </div>
+        <Link href="/">
+          <a>
+            <div className="flex space-x-4 items-center">
+              <Image height={30} width={30} src="/images/logo.png" alt="logo" />
+              <p className="text-lg font-medium">MemoryZen</p>
+            </div>
+          </a>
+        </Link>
         <div className="hidden md:inline-flex items-center">
           {itemsMenu.map((item) => (
             <Link href={item.enabled ? item.router : "/"} key={item.name}>
-              <div className={`items-center ${item.enabled ? "cursor-pointer" : "cursor-not-allowed"} p-3`}>
+              <div
+                className={`items-center ${
+                  item.enabled ? "cursor-pointer" : "cursor-not-allowed"
+                } p-3`}
+              >
                 <p className="text-md font-medium">{item.name}</p>
               </div>
             </Link>
