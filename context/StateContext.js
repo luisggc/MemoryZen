@@ -10,11 +10,11 @@ export const StateContext = ({ children }) => {
 
   useEffect(() => {
     const cartItems = localStorage.getItem("cartItems", cartItems);
-    setCartitems(JSON.parse(cartItems));
+    setCartitems(cartItems ? JSON.parse(cartItems) : []);
   }, [setCartitems]);
 
   useEffect(() => {
-    if (cartItems == initialCartItems) return;
+    if (cartItems === initialCartItems) return;
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
