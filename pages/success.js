@@ -9,7 +9,7 @@ export default function Success() {
 
   useEffect(() => {
     setCartitems([]);
-  }, []);
+  }, [setCartitems]);
 
   return (
     <DefaultLayout>

@@ -11,7 +11,7 @@ export const StateContext = ({ children }) => {
   useEffect(() => {
     const cartItems = localStorage.getItem("cartItems", cartItems);
     setCartitems(JSON.parse(cartItems));
-  }, []);
+  }, [setCartitems]);
 
   useEffect(() => {
     if (cartItems == initialCartItems) return;

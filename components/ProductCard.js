@@ -10,6 +10,7 @@ export default function ProductCard({ name, description, price, image }) {
         height={500}
         width={500}
         layout="responsive"
+        alt={name}
       />
       <div className="absolute bottom-0 left-0 w-full bg-white bg-opacity-60 backdrop-blur-lg px-8 pt-4 pb-5 flex flex-col rounded-tr-3xl rounded-bl-3xl ">
         <div className="flex justify-start items-center w-full">

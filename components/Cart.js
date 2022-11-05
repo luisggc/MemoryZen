@@ -1,5 +1,6 @@
 import { XIcon, TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/outline";
 import Image from "next/image";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import { useStateContext } from "../context/StateContext";
 import useClickOutside from "../hooks/useClickOutside";
@@ -47,9 +48,9 @@ export default function Cart({ visibleCart, setVisibleCart }) {
           <div className="flex items-center grow">
             <p>You do not have items in your cart.</p>
             <p>
-              <a href="/" className="font-semibold text-green-400">
+              <Link href="/" className="font-semibold text-green-400">
                 Click here
-              </a>{" "}
+              </Link>{" "}
               to select the best products.
             </p>
           </div>
