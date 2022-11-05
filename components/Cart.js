@@ -17,7 +17,7 @@ export default function Cart({ visibleCart, setVisibleCart }) {
     const response = await fetch("/api/stripe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({cartItems}),
+      body: JSON.stringify({ cartItems }),
     });
 
     if (response.statusCode === 500) return;
@@ -42,14 +42,14 @@ export default function Cart({ visibleCart, setVisibleCart }) {
       </div>
       <div className="flex flex-col h-full justify-between px-10">
         <div className="mt-10 mb-8">
-          <p className="text-xl text-green-500 font-semibold text-left">Carrinho</p>
+          <p className="text-xl text-green-500 font-semibold text-left">Cart</p>
         </div>
         {cartItems.length === 0 ? (
-          <div className="flex items-center grow">
+          <div className="flex flex-col justify-center items-center grow">
             <p>You do not have items in your cart.</p>
             <p>
-              <Link href="/" className="font-semibold text-green-400">
-                Click here
+              <Link href="/">
+                <a className="font-semibold text-green-400">Click here</a>
               </Link>{" "}
               to select the best products.
             </p>
