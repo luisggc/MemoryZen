@@ -25,3 +25,7 @@ See a live demo here: [https://memoryzen-luisggc.vercel.app/](https://memoryzen-
 - Payment
 
 ![payment](demo-images/payment.gif)
+
+- CMS
+
+![CMS](demo-images/CMS.gif)
