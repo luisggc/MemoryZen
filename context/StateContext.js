@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 const Context = createContext();
 
@@ -9,8 +9,12 @@ export const StateContext = ({ children }) => {
   const itemsCartQuantity = cartItems ? cartItems.length : 0;
 
   useEffect(() => {
-    const cartItems = localStorage.getItem("cartItems", cartItems);
-    setCartitems(cartItems ? JSON.parse(cartItems) : []);
+    const cartItemsStorage = localStorage.getItem("cartItems", cartItems);
+    setCartitems((previousCart) => {
+      // If It is being set an empty cart after first render, returns empty array
+      if (previousCart !== initialCartItems && previousCart.length === 0) return [];
+      return cartItemsStorage ? JSON.parse(cartItemsStorage) : [];
+    });
   }, [setCartitems]);
 
   useEffect(() => {
